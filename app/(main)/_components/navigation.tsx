@@ -1,14 +1,16 @@
 "use cleint"
 
 import { cn } from "@/lib/utils"
-import { ChevronsLeft, MenuIcon } from "lucide-react"
+import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react"
 import { usePathname } from "next/navigation"
 
 import React, { ElementRef, useEffect, useRef, useState } from "react"
 import {useMediaQuery} from "usehooks-ts"
 import { UserItem } from "./user-items"
-import { useQuery } from "convex/react"
+import { useMutation, useQuery } from "convex/react"
 import { api } from "@/convex/_generated/api"
+import { Item } from "./item"
+import { toast } from "sonner"
 export const Navigation =()=>{
     const pathname = usePathname()
     const isMobile = useMediaQuery("(max-width: 768px)")
@@ -18,6 +20,7 @@ export const Navigation =()=>{
     const [isResetting, setIsResetting] = useState(false)
     const[iscollapsed, setIsCollapsed] = useState(isMobile)
 const documents = useQuery(api.documents.get)
+const create = useMutation(api.documents.create)
     useEffect(()=>{
         if(isMobile){
             collapse()
@@ -80,6 +83,15 @@ const collapse = ()=>{
     }
 }
 
+const handleCreate = ()=>{
+   const promise = create({title: "Untitled"})
+   toast.promise(promise,{
+loading: "creating new note...",
+success: "new note created",
+error: "failed to create a new note"
+   })
+}
+
     return(
        <>
 <aside ref={sideBarRef} className=
@@ -94,6 +106,9 @@ const collapse = ()=>{
     </div>
 <div>
 <UserItem/>
+<Item label="search" icon={Search}  onclick={()=>{}}/>
+<Item label="settings" icon={Settings} isSearch onclick={()=>{}}/>
+<Item onclick={handleCreate} label="new page" icon={PlusCircle}/>
 </div>
 <div className="mt-4">
 <p>{documents?.map((document)=>(
