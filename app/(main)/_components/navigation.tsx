@@ -3,10 +3,12 @@
 import { cn } from "@/lib/utils"
 import { ChevronsLeft, MenuIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
-import { eventNames } from "process"
+
 import React, { ElementRef, useEffect, useRef, useState } from "react"
 import {useMediaQuery} from "usehooks-ts"
 import { UserItem } from "./user-items"
+import { useQuery } from "convex/react"
+import { api } from "@/convex/_generated/api"
 export const Navigation =()=>{
     const pathname = usePathname()
     const isMobile = useMediaQuery("(max-width: 768px)")
@@ -15,7 +17,7 @@ export const Navigation =()=>{
     const navbarRef = useRef<ElementRef<"div">>(null)
     const [isResetting, setIsResetting] = useState(false)
     const[iscollapsed, setIsCollapsed] = useState(isMobile)
-
+const documents = useQuery(api.documents.get)
     useEffect(()=>{
         if(isMobile){
             collapse()
@@ -94,7 +96,9 @@ const collapse = ()=>{
 <UserItem/>
 </div>
 <div className="mt-4">
-<p>Documents</p>
+<p>{documents?.map((document)=>(
+ <p key={document._id}>{document.title}</p>
+))}</p>
 </div>
 <div onMouseDown={handleMouseDown} onClick={resetWidth} className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"/>
 </aside>
