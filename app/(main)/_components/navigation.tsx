@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils"
 import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from "lucide-react"
 import { usePathname } from "next/navigation"
-
 import React, { ElementRef, useEffect, useRef, useState } from "react"
 import {useMediaQuery} from "usehooks-ts"
 import { UserItem } from "./user-items"
@@ -15,7 +14,11 @@ import { DocumentList } from "./document-list"
 import { Popover, PopoverContent } from "@/components/ui/popover"
 import { PopoverTrigger } from "@radix-ui/react-popover"
 import { TrashBox } from "./trash-box"
+import { useSearch } from "@/hooks/use-search"
+import { useSettings } from "@/hooks/use-settings"
 export const Navigation =()=>{
+    const settings = useSettings()
+    const search= useSearch()
     const pathname = usePathname()
     const isMobile = useMediaQuery("(max-width: 768px)")
     const isResizingRef = useRef(false)
@@ -110,8 +113,8 @@ error: "failed to create a new note"
     </div>
 <div>
 <UserItem/>
-<Item label="search" icon={Search}  onclick={()=>{}}/>
-<Item label="settings" icon={Settings} isSearch onclick={()=>{}}/>
+<Item label="search" icon={Search}  onclick={search.onOpen}/>
+<Item label="settings" icon={Settings} isSearch onclick={settings.onOpen}/>
 <Item onclick={handleCreate} label="new page" icon={PlusCircle}/>
 </div>
 <div className="mt-4">

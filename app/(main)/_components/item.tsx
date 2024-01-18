@@ -71,7 +71,7 @@ const onCreate = (event: React.MouseEvent<HTMLDivElement,MouseEvent>)=>{
 
                 )}>
                     {!!id && (
-                        <div className="h-full rounded-sm hover:bg-neutral-300 dark:bg-neutral-600 mr-1" role="button" onClick={handleExpand}>
+                        <div className="h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 mr-1" role="button" onClick={handleExpand}>
                             <ChevronIcon className="h-4 w-4 shrink-0 text-muted-foreground/50"/>
                         </div>
                     )}
