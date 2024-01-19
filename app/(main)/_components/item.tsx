@@ -34,6 +34,7 @@ export const Item = ({
         event.stopPropagation()
 if(!id) return
 const promise = archive({id})
+.then(()=>router.push("/documents"))
 toast.promise(promise,{
     loading: "moving to trash..",
     success: "note moved to trash",
@@ -53,7 +54,7 @@ const onCreate = (event: React.MouseEvent<HTMLDivElement,MouseEvent>)=>{
     const promise = create({title: "untitled", parentDocument: id})
     .then((documentId)=>{
         if(!expanded){
-// router.push(`documents/${documentId}`)
+router.push(`/documents/${documentId}`)
         }
     })
     toast.promise(promise,{
