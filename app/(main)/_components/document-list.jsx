@@ -11,21 +11,17 @@ import { cn } from "@/lib/utils";
 
 import { Item } from "./item";
 
-interface DocumentListProps {
-  parentDocumentId?: Id<"documents">;
-  level?: number;
-  data?: Doc<"documents">[];
-}
+
 
 export const DocumentList = ({
-  parentDocumentId,
+  parentDocumentId="",
   level = 0
-}: DocumentListProps) => {
+}) => {
   const params = useParams();
   const router = useRouter();
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [expanded, setExpanded] = useState({});
 
-  const onExpand = (documentId: string) => {
+  const onExpand = (documentId) => {
     setExpanded(prevExpanded => ({
       ...prevExpanded,
       [documentId]: !prevExpanded[documentId]
@@ -36,7 +32,7 @@ export const DocumentList = ({
     parentDocument: parentDocumentId
   });
 
-  const onRedirect = (documentId: string) => {
+  const onRedirect = (documentId) => {
     router.push(`/documents/${documentId}`);
   };
 
