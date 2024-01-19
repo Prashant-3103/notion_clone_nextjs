@@ -1,5 +1,4 @@
 "use client"
-
 import { Dialog,DialogContent,DialogHeader } from "../ui/dialog"
 import { useCoverImage } from "@/hooks/use-cover-image"
 import { SingleImageDropzone } from "../single-image-dropzone"
@@ -27,9 +26,13 @@ if(file)
 {
     setIsSubmitting(true)
     setfile(file)
-    const res = await edgestore.publicFiles.upload({
-        file
-    })
+
+     const res = await edgestore.publicFiles.upload({
+            file,
+            options: {
+                replaceTargetUrl: coverImage.url
+            }
+        })
     await update({
         id: params.documentId as Id<"documents">,
         coverImage: res.url
