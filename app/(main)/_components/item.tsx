@@ -15,7 +15,7 @@ interface ItemProps{
     id?: Id<"documents">;
     documentIcon?: string;
     label: string;
-    onclick?: () => void;
+    onClick?: () => void;
     active?: boolean;
     expanded?: boolean;
     isSearch?: boolean;
@@ -24,7 +24,7 @@ interface ItemProps{
     icon: LucideIcon;
 }
 export const Item = ({
-    label,onclick,icon: Icon,id,level=0,active,documentIcon,isSearch,onExpand,expanded
+    label,onClick,icon: Icon,id,level=0,active,documentIcon,isSearch,onExpand,expanded
 }: ItemProps)=>{
     const {user} = useUser()
     const router = useRouter()
@@ -66,7 +66,7 @@ router.push(`/documents/${documentId}`)
 }
 
     return(
-        <div onClick={onclick} role="button" style={{
+        <div onClick={onClick} role="button" style={{
             paddingLeft: level? `${(level*12)+12}px`: "12px"}} className={cn(
                 "group min-h-[27px] text-sm py-1 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium", active && "bg-primary/5 text-primary"
 
