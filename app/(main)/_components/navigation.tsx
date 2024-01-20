@@ -1,3 +1,4 @@
+"use client";
 
 import {
   ChevronsLeft,
@@ -24,12 +25,11 @@ import {
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
 
-
+import { UserItem } from "./user-items";
 import { Item } from "./item";
 import { DocumentList } from "./document-list";
 import { TrashBox } from "./trash-box";
 import { Navbar } from "./navbar";
-import { UserItem } from "./user-items";
 
 export const Navigation = () => {
   const router = useRouter();
@@ -45,30 +45,14 @@ export const Navigation = () => {
   const navbarRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
-  const resetWidth = () => {
-    if (sidebarRef.current && navbarRef.current) {
-      setIsCollapsed(false);
-      setIsResetting(true);
 
-      sidebarRef.current.style.width = isMobile ? "100%" : "240px";
-      navbarRef.current.style.setProperty(
-        "width",
-        isMobile ? "0" : "calc(100% - 240px)"
-      );
-      navbarRef.current.style.setProperty(
-        "left",
-        isMobile ? "100%" : "240px"
-      );
-      setTimeout(() => setIsResetting(false), 300);
-    }
-  };
   useEffect(() => {
     if (isMobile) {
       collapse();
     } else {
-     resetWidth()
+      resetWidth();
     }
-  }, [isMobile,resetWidth]);
+  }, [isMobile]);
 
   useEffect(() => {
     if (isMobile) {
@@ -107,7 +91,23 @@ export const Navigation = () => {
     document.removeEventListener("mouseup", handleMouseUp);
   };
 
+  const resetWidth = () => {
+    if (sidebarRef.current && navbarRef.current) {
+      setIsCollapsed(false);
+      setIsResetting(true);
 
+      sidebarRef.current.style.width = isMobile ? "100%" : "240px";
+      navbarRef.current.style.setProperty(
+        "width",
+        isMobile ? "0" : "calc(100% - 240px)"
+      );
+      navbarRef.current.style.setProperty(
+        "left",
+        isMobile ? "100%" : "240px"
+      );
+      setTimeout(() => setIsResetting(false), 300);
+    }
+  };
 
   const collapse = () => {
     if (sidebarRef.current && navbarRef.current) {
