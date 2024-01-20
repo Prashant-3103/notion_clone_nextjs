@@ -172,7 +172,7 @@ export const Navigation = () => {
           />
         </div>
         <div className="mt-4">
-          <DocumentList  />
+          <DocumentList />
           <Item
             onClick={handleCreate}
             icon={Plus}

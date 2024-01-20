@@ -4,22 +4,28 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useQuery } from "convex/react";
 import { FileIcon } from "lucide-react";
+
+import { Doc, Id } from "@/convex/_generated/dataModel";
 import { api } from "@/convex/_generated/api";
 import { cn } from "@/lib/utils";
 
 import { Item } from "./item";
 
-
+interface DocumentListProps {
+  parentDocumentId?: Id<"documents">;
+  level?: number;
+  data?: Doc<"documents">[];
+}
 
 export const DocumentList = ({
-  parentDocumentId="",
+  parentDocumentId,
   level = 0
-}) => {
+}: DocumentListProps) => {
   const params = useParams();
   const router = useRouter();
-  const [expanded, setExpanded] = useState({});
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
-  const onExpand = (documentId) => {
+  const onExpand = (documentId: string) => {
     setExpanded(prevExpanded => ({
       ...prevExpanded,
       [documentId]: !prevExpanded[documentId]
@@ -30,7 +36,7 @@ export const DocumentList = ({
     parentDocument: parentDocumentId
   });
 
-  const onRedirect = (documentId) => {
+  const onRedirect = (documentId: string) => {
     router.push(`/documents/${documentId}`);
   };
 
