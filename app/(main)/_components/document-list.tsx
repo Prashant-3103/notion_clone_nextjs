@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useQuery } from "convex/react";
 import { FileIcon } from "lucide-react";
 
-import { Doc, Id } from "@/convex/_generated/dataModel";
+import { Doc, Id } from "../../../convex/_generated/dataModel";
 import { api } from "@/convex/_generated/api";
 import { cn } from "@/lib/utils";
 
